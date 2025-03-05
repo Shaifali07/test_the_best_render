@@ -1,0 +1,15 @@
+langchain
+groq
+langchain_core
+torch
+langchain_groq
+unstructured
+langchain_community
+docx2txt
+pypdf
+langchain_chroma
+unstructured[docx]
+langchain_huggingface
+python-multipart
+streamlit
+pysqlite3-binary

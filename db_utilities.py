@@ -42,7 +42,7 @@ def get_chat_history(session_id):
             {"role": "ai", "content": row['gpt_response']}
         ])
     conn.close()
-    print(messages)
+    # print(messages)
     return messages
 def insert_document_record(filename):
     conn = get_db_connection()

@@ -1,20 +1,21 @@
 import os
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+# __import__('pysqlite3')
+# import sys
+# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 from langchain_utilites import generate_response
 from db_utilities import get_chat_history,insert_application_logs,get_all_documents
 from pydantic import BaseModel
 from chroma_utils import index_document_to_Chroma
 import uuid
-from fastapi import FastAPI, UploadFile, File,HTTPException
-app=FastAPI()
+import torch
+torch.classes.__path__ = [os.path.join(torch.__path__[0], torch.classes.__file__)]
+# from fastapi import FastAPI, UploadFile, File,HTTPException
+# app=FastAPI()
 
 
 # directory_path=os.path.join(pathlib.Path(__file__).parent.resolve(),'\papers')
 directory_path=(os.getcwd()+'/papers')
-from db_utilities import insert_document_record, delete_all_record
-delete_all_record()
+
 def clear_question_bank(directory_path):
     try:
 
@@ -29,7 +30,9 @@ def clear_question_bank(directory_path):
 if (not clear_question_bank(directory_path)):
     print("error in clearing the question bank")
 
-
+from db_utilities import insert_document_record, delete_all_record
+delete_all_record()
+clear_question_bank(directory_path)
 # class query_input(BaseModel):
 #     question:str
 #     course_outcomes:str=None
@@ -50,28 +53,11 @@ if (not clear_question_bank(directory_path)):
 
 #     return QueryResponse(response=response, session_id=query_input.session_id, model_name=query_input.model)
 
-@app.get("/listfile")
-async def list_files():
-    documents = get_all_documents()
-    return documents
+# @app.get("/listfile")
+# async def list_files():
+#     documents = get_all_documents()
+#     return documents
 
-@app.post("/uploadfile")
-async def create_upload_file( file: UploadFile = File(...)):
-      try:
-
-              file_path = os.getcwd()+'/papers/'+file.filename
-              with open(file_path, "wb") as f:
-                    f.write(file.file.read())
-              success = index_document_to_Chroma()
-              file_id = insert_document_record(file.filename)
-              if(success):
-
-                     return {"message": "File saved successfully"}
-              else:
-                raise HTTPException(status_code=500, detail=f"Failed to index {file.filename}.")
-     
-      except Exception as e:
-         return {"message": e.args}
 
 
 

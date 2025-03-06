@@ -1,4 +1,8 @@
 import sqlite3
+import pathlib
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 from datetime import datetime
 DB_NAME = "rag_app.db"
 def get_db_connection():

@@ -1,6 +1,9 @@
 import streamlit as st
 import os
 import pathlib
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 from langchain_utilites import generate_response
 from db_utilities import get_chat_history,insert_application_logs,get_all_documents
 from pydantic import BaseModel

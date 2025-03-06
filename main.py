@@ -1,3 +1,4 @@
+import streamlit as st
 import os
 import pathlib
 from langchain_utilites import generate_response
@@ -31,16 +32,6 @@ if (not clear_question_bank(directory_path)):
 from db_utilities import insert_document_record, delete_all_record
 delete_all_record()
 clear_question_bank(directory_path)
-import streamlit as st
-import os
-from chroma_utils import index_document_to_Chroma
-from db_utilities import get_all_documents, delete_all_record, insert_document_record
-from main import clear_question_bank
-from langchain_utilites import generate_response
-from db_utilities import get_chat_history,insert_application_logs,get_all_documents
-from chroma_utils import index_document_to_Chroma
-import uuid
-
 
 directory_path=(os.getcwd()+'/papers')
 

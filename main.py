@@ -69,8 +69,6 @@ def upload_document(uploaded_files):
             response = create_upload_file(uploaded_files[i].name, uploaded_file[i])
             if not response:
                 return "error in uploading"+ uploaded_files[i].name
-            index_document_to_Chroma()
-            insert_document_record(uploaded_files[i].name)
         return "Files saved Successfully"
     except Exception as e:
         st.error(f"An error occurred while uploading the file: {str(e)}")
